@@ -70,7 +70,7 @@ function LoginForm() {
         {formErrors.password && <Alert variant="danger">{formErrors.password}</Alert>}
       </Form.Group>
 
-      <Button variant="primary" onClick={handleSubmit} disabled={!!formErrors.email || !!formErrors.password}>
+      <Button variant="primary" onClick={handleSubmit} disabled={!email || !password || !!formErrors.email || !!formErrors.password}>
         Continue
       </Button>
     </Form>

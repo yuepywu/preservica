@@ -9,10 +9,12 @@ export default function Page() {
   return (
     <Container>
       <Row>
+        <Col></Col>
         <Col>
-          <h1>Welcome to Login Page!</h1>
+          <h1 className="mt-5 mb-4">Login</h1>
           <LoginForm />
         </Col>
+        <Col></Col>
       </Row>
     </Container>
   )
