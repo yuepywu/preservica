@@ -9,7 +9,7 @@ const poppins = Poppins({
 })
 
 export const metadata: Metadata = {
-  title: 'F1 Ranking',
+  title: 'User profile management',
 }
 
 export default function RootLayout({
