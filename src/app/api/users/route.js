@@ -1,30 +1,43 @@
 import { NextResponse } from 'next/server'
 import { promises as fs } from 'fs'
 
-export async function GET() {
-  try {
-    const res = await fetch('https://jsonplaceholder.typicode.com/users')
-
-    if (!res.ok) {
-      return NextResponse.error(`Failed to fetch data from the API: ${res.statusText}`, res.status)
-    }
-
-    const data = await res.json()
-
-    return NextResponse.json(data)
-  } catch (error) {
-    
-    const fallbackData = await readLocalJSONFile()
-    return NextResponse.json(fallbackData)
-  }
+const handleDataFetching = async (fetchFunction, fallbackFunction) => {
+	try {
+		const data = await fetchFunction()
+		return NextResponse.json(data)
+	} catch (error) {
+		console.error('Error while fetching data:', error)
+		const fallbackData = await fallbackFunction()
+		return NextResponse.json(fallbackData)
+	}
 }
 
-async function readLocalJSONFile() {
-  try {
-    const localData = await fs.readFile(process.cwd() + 'app/api/users/fallback.json', 'utf-8')
-    return JSON.parse(localData)
-  } catch (error) {
-    console.error('Failed to read local JSON file:', error)
-    return []
-  }
+export const GET = async () => {
+	return handleDataFetching(fetchDataFromAPI, () =>
+		readLocalJSONFile('app/api/users/fallback.json')
+	)
+}
+
+export const fetchDataFromAPI = async () => {
+	const apiEndpoint = 'https://jsonplaceholder.typicode.com/users'
+	try {
+		const res = await fetch(apiEndpoint)
+	if (!res.ok) {
+		throw new Error(`Failed to fetch data from the API: ${res.statusText}`)
+	}
+		return await res.json()
+	} catch (error) {
+		throw error
+	}
+}
+
+export const readLocalJSONFile = async (filePath) => {
+	const fullPath = process.cwd() + filePath
+	try {
+		const localData = await fs.readFile(fullPath, 'utf-8')
+		return JSON.parse(localData)
+	} catch (error) {
+		console.error('Failed to read local JSON file:', error)
+		return []
+	}
 }

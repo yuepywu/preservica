@@ -1,30 +1,28 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './global.css';
+import 'bootstrap/dist/css/bootstrap.min.css'
+import './global.css'
+
 import type { Metadata } from 'next'
 import { Poppins } from 'next/font/google'
 
 const poppins = Poppins({
-  weight: ['400', '500', '600'],
-  subsets: ['latin'],
+    weight: ['400', '500', '600'],
+    subsets: ['latin'],
 })
 
 export const metadata: Metadata = {
-  title: 'User profile management',
+    title: 'User profile management',
 }
 
 export default function RootLayout({
-  children,
+    children,
 }: {
-  children: React.ReactNode
+    children: React.ReactNode,
 }) {
-  return (
-    <html lang="en">
-      <body
-        className={poppins.className}
-        suppressHydrationWarning={true}
-      >
-        {children}
-      </body>
-    </html>
-  )
+    return (
+        <html lang="en">
+            <body className={poppins.className} suppressHydrationWarning={true}>
+                {children}
+            </body>
+        </html>
+    )
 }
