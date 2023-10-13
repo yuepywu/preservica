@@ -1,21 +1,34 @@
-"use client"
+'use client'
 
-import Container from 'react-bootstrap/Container'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import LoginForm from './components/LoginForm/LoginForm'
+import { useRouter } from 'next/navigation'
+import { Container, Row, Col } from 'react-bootstrap'
+import Header from 'components/Header'
+import LoginForm from 'components/LoginForm'
 
-export default function Page() {
-  return (
-    <Container>
-      <Row>
-        <Col></Col>
-        <Col>
-          <h1 className="mt-5 mb-4">Login</h1>
-          <LoginForm />
-        </Col>
-        <Col></Col>
-      </Row>
-    </Container>
-  )
+const Page = () => {
+    
+    const router = useRouter()
+
+    const nextPage = () => {
+        router.push('/user-list')
+    }
+
+    return (
+        <Container fluid>
+            <Row>
+                <Header />
+            </Row>
+            <Container>
+                <Row>
+                    <Col xs md="3" lg="4" />
+                    <Col xs="12" md="6" lg="4">
+                        <LoginForm onClickContinue={nextPage} />
+                    </Col>
+                    <Col xs md="3" lg="4" />
+                </Row>
+            </Container>
+        </Container>
+    )
 }
+
+export default Page
